@@ -1,13 +1,13 @@
-const express = require('express');
-const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+import Express from 'express';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+
+const app = Express();
+const http = createServer(app);
+const io = new Server(http);
 
 const PORT = 7000;
 
-/**
- * "/"にアクセスがあったらindex.htmlを返却
- */
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   console.log('ユーザーが接続しました');
 
-  socket.on('post', (msg) => {
+  socket.on('post', (msg: string) => {
     io.emit('member-post', msg);
   });
 });

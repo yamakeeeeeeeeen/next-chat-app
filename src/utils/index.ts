@@ -1,2 +1,2 @@
 export { getHost } from '~/utils/getHost';
-export { pushMessage } from '~/utils/pushMessage';
+export { pushData } from '~/utils/pushData';

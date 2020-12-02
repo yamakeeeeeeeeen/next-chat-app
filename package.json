@@ -25,6 +25,7 @@
     "pusher-js": "^7.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-hook-form": "^6.12.2",
     "socket.io": "^3.0.3"
   },
   "devDependencies": {

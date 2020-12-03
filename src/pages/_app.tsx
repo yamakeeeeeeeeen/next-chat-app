@@ -1,3 +1,5 @@
+import { AppProps } from 'next/app';
+import Head from 'next/head';
 import { PusherProvider } from '@harelpls/use-pusher';
 import { getHost } from '~/utils';
 
@@ -18,11 +20,18 @@ const config = {
   // },
 };
 
-const App = ({ Component, pageProps }) => {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <PusherProvider {...config}>
-      <Component {...pageProps} />
-    </PusherProvider>
+    <div>
+      <Head>
+        <title>Pusher Chat App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <PusherProvider {...config}>
+        <Component {...pageProps} />
+      </PusherProvider>
+    </div>
   );
 };
 

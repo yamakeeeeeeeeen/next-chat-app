@@ -10,7 +10,7 @@ const config = {
 
   // optional if you'd like to trigger events. BYO endpoint.
   // see "Trigger Server" below for more info
-  triggerEndpoint: `${getHost()}/api/pusher/channels-event`,
+  triggerEndpoint: `${getHost()}/api/pusher/chat`,
 
   // required for private/presence channels
   // also sends auth headers to trigger endpoint

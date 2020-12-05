@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FC } from 'react';
+import { LoginForm } from '~/components/LoginForm';
 
 const Login: FC = () => (
   <div>
@@ -13,8 +14,9 @@ const Login: FC = () => (
           </Link>
         </p>
       </div>
-      <div>Todo: Create Login form component and add here</div>
+      <LoginForm />
     </div>
   </div>
 );
+
 export default Login;

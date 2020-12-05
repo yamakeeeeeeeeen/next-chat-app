@@ -14,4 +14,5 @@ const SignUp: FC = () => (
     <SignUpForm />
   </div>
 );
+
 export default SignUp;

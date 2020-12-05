@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { FC } from 'react';
+import { SignUpForm } from '~/components/SignUpForm';
 
 const SignUp: FC = () => (
   <div>
@@ -10,7 +11,7 @@ const SignUp: FC = () => (
         <a href="#">Log in</a>
       </Link>
     </p>
-    <div>Todo: Create Sign up form component and add here</div>
+    <SignUpForm />
   </div>
 );
 export default SignUp;

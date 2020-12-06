@@ -1,35 +1,13 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { auth } from '~/config/firebase';
-
-type SignUpData = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-const signUp: (data: SignUpData) => Promise<void | { error: any }> = (data) => {
-  return auth
-    .createUserWithEmailAndPassword(data.email, data.password)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      return { error };
-    });
-};
+import { SignUpData, useAuth } from '~/hooks/useAuth';
 
 export const SignUpForm: FC = () => {
   const { register, errors, handleSubmit } = useForm<SignUpData>();
-
-  const onSubmit = (data: SignUpData) => {
-    return signUp(data).then((user) => {
-      console.log(user);
-    });
-  };
+  const { signUp } = useAuth();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(signUp)}>
       <div>
         <label htmlFor="name">Name</label>
         <input

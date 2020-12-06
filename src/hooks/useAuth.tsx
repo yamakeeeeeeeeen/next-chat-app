@@ -111,7 +111,12 @@ const useAuthProvider: UseAuthProvider = () => {
   };
 };
 
-type AuthContext = { user: UserInfo | null; signUp: SignUP | null; signIn: SignIn | null; signOut: SignOut | null };
+export type AuthContext = {
+  user: UserInfo | null;
+  signUp: SignUP | null;
+  signIn: SignIn | null;
+  signOut: SignOut | null;
+};
 type UseAuth = () => AuthContext;
 
 const authContext = createContext<AuthContext>({ user: null, signUp: null, signIn: null, signOut: null });

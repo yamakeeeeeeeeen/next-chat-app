@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { useAuth } from '~/hooks/useAuth';
+import { useRequireAuth } from '~/hooks/useRequireAuth';
 
 const DashBoard: FC = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut } = useRequireAuth();
   if (!user) return null;
 
   return (

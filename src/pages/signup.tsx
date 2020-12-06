@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FC } from 'react';
-import { SignUpForm } from '~/components/SignUpForm';
+import { SignUpForm } from '~/components/forms/SignUpForm';
 
 const SignUp: FC = () => (
   <div>

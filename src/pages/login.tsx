@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FC } from 'react';
-import { LoginForm } from '~/components/LoginForm';
+import { LoginForm } from '~/components/forms/LoginForm';
 
 const Login: FC = () => (
   <div>

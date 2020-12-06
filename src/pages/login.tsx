@@ -6,7 +6,7 @@ const Login: FC = () => (
   <div>
     <div>
       <div>
-        <h2>Log in</h2>
+        <h2>Login</h2>
         <p>
           {"Don't have an account? "}
           <Link href="/signup">
@@ -15,6 +15,13 @@ const Login: FC = () => (
         </p>
       </div>
       <LoginForm />
+      <div>
+        <div>
+          <Link href="/reset-password">
+            <a href="#">Forgot your password?</a>
+          </Link>
+        </div>
+      </div>
     </div>
   </div>
 );

@@ -2,7 +2,7 @@ import { createContext, FC, useCallback, useContext, useEffect, useState } from 
 import { auth, db } from '~/config/firebase';
 import { User as FirebaseUser } from '@firebase/auth-types';
 
-type UserInfo = { uid: string; name: string; email: string };
+export type UserInfo = { uid: string; name: string; email: string };
 export type SignUpData = { name: string; email: string; password: string };
 export type SignInData = Omit<SignUpData, 'name'>;
 type GetUserAdditionalData = (user: FirebaseUser) => Promise<void>;
@@ -10,7 +10,14 @@ type SignUP = (data: SignUpData) => Promise<void | { error: any }>;
 type SignIn = ({ email, password }: SignInData) => Promise<FirebaseUser | { error: any }>;
 type SignOut = () => Promise<void>;
 type HandleAuthStateChanged = (user: FirebaseUser) => void;
-type UseAuthProvider = () => { user: UserInfo; signUp: SignUP; signIn: SignIn; signOut: SignOut };
+type SendPasswordResetEmail = (email: string) => Promise<void>;
+type UseAuthProvider = () => {
+  user: UserInfo;
+  signUp: SignUP;
+  signIn: SignIn;
+  signOut: SignOut;
+  sendPasswordResetEmail: SendPasswordResetEmail;
+};
 
 // Provider hook that creates an auth object and handles it's state
 const useAuthProvider: UseAuthProvider = () => {
@@ -87,6 +94,12 @@ const useAuthProvider: UseAuthProvider = () => {
     [getUserAdditionalData],
   );
 
+  const sendPasswordResetEmail: SendPasswordResetEmail = useCallback((email) => {
+    return auth.sendPasswordResetEmail(email).then((response) => {
+      return response;
+    });
+  }, []);
+
   useEffect(() => {
     const unsub = auth.onAuthStateChanged(handleAuthStateChanged);
     return () => unsub();
@@ -108,6 +121,7 @@ const useAuthProvider: UseAuthProvider = () => {
     signUp,
     signIn,
     signOut,
+    sendPasswordResetEmail,
   };
 };
 
@@ -116,10 +130,17 @@ export type AuthContext = {
   signUp: SignUP | null;
   signIn: SignIn | null;
   signOut: SignOut | null;
+  sendPasswordResetEmail: SendPasswordResetEmail | null;
 };
 type UseAuth = () => AuthContext;
 
-const authContext = createContext<AuthContext>({ user: null, signUp: null, signIn: null, signOut: null });
+const authContext = createContext<AuthContext>({
+  user: null,
+  signUp: null,
+  signIn: null,
+  signOut: null,
+  sendPasswordResetEmail: null,
+});
 const { Provider } = authContext;
 
 export const AuthProvider: FC = ({ children }) => {

@@ -1,24 +1,7 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { PusherProvider } from '@harelpls/use-pusher';
-import { getHost } from '~/utils';
-
-const config = {
-  // required config props
-  clientKey: process.env.NEXT_PUBLIC_KEY,
-  cluster: process.env.NEXT_PUBLIC_CLUSTER,
-
-  // optional if you'd like to trigger events. BYO endpoint.
-  // see "Trigger Server" below for more info
-  triggerEndpoint: `${getHost()}/api/pusher/chat`,
-
-  // required for private/presence channels
-  // also sends auth headers to trigger endpoint
-  // authEndpoint: '/pusher/auth',
-  // auth: {
-  //   headers: { Authorization: 'Bearer token' },
-  // },
-};
+import { PusherProvider } from '~/context/PusherContext';
+import { AuthProvider } from '~/hooks/useAuth';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
@@ -28,9 +11,11 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <PusherProvider {...config}>
-        <Component {...pageProps} />
-      </PusherProvider>
+      <AuthProvider>
+        <PusherProvider>
+          <Component {...pageProps} />
+        </PusherProvider>
+      </AuthProvider>
     </div>
   );
 };

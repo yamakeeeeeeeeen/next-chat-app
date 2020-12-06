@@ -1,16 +1,32 @@
-import { FC } from 'react';
-import { useForm } from 'react-hook-form';
-import { SignInData, useAuth } from '~/hooks/useAuth';
 import { useRouter } from 'next/router';
+import { FC, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { User as FirebaseUser } from '@firebase/auth-types';
+import { SignInData, useAuth } from '~/hooks/useAuth';
+
+// Type determined by FirebaseUser
+function implementsFirebaseUser(arg: any): arg is FirebaseUser {
+  return arg !== null && typeof arg === 'object' && typeof arg.uid === 'string';
+}
 
 export const LoginForm: FC = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<any>(null);
   const { register, errors, handleSubmit } = useForm<SignInData>();
   const auth = useAuth();
   const router = useRouter();
 
   const onSubmit = (data: SignInData) => {
-    return auth.signIn(data).then(() => {
-      router.push('/dashboard');
+    setIsLoading(true);
+    setError(null);
+
+    return auth.signIn(data).then((response) => {
+      setIsLoading(false);
+      if (implementsFirebaseUser(response)) {
+        router.push('/dashboard').then();
+      } else {
+        setError(response.error);
+      }
     });
   };
 
@@ -57,6 +73,11 @@ export const LoginForm: FC = () => {
           <button type="submit">Log in</button>
         </span>
       </div>
+      {error?.message && (
+        <div>
+          <span>{error.message}</span>
+        </div>
+      )}
     </form>
   );
 };

@@ -1,15 +1,17 @@
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-
-type LoginData = {
-  email: string;
-  password: string;
-};
+import { SignInData, useAuth } from '~/hooks/useAuth';
+import { useRouter } from 'next/router';
 
 export const LoginForm: FC = () => {
-  const { register, errors, handleSubmit } = useForm<LoginData>();
-  const onSubmit = (data: LoginData) => {
-    console.log(data);
+  const { register, errors, handleSubmit } = useForm<SignInData>();
+  const auth = useAuth();
+  const router = useRouter();
+
+  const onSubmit = (data: SignInData) => {
+    return auth.signIn(data).then(() => {
+      router.push('/dashboard');
+    });
   };
 
   return (

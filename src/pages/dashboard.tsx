@@ -2,15 +2,16 @@ import { FC } from 'react';
 import { useAuth } from '~/hooks/useAuth';
 
 const DashBoard: FC = () => {
-  const auth = useAuth();
-  if (!auth.user) return null;
+  const { user, signOut } = useAuth();
+  if (!user) return null;
 
   return (
     <div>
       <div>
         <div>
-          <h2>{`Welcome ${auth.user.name}!`}</h2>
-          <p>{`You are logged in with ${auth.user.email}`}</p>
+          <h2>{`Welcome ${user.name}!`}</h2>
+          <p>{`You are logged in with ${user.email}`}</p>
+          <button onClick={() => signOut()}>Sign out</button>
         </div>
       </div>
     </div>

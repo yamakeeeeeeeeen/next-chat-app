@@ -8,8 +8,9 @@ export type SignInData = Omit<SignUpData, 'name'>;
 type GetUserAdditionalData = (user: FirebaseUser) => Promise<void>;
 type SignUP = (data: SignUpData) => Promise<void | { error: any }>;
 type SignIn = ({ email, password }: SignInData) => Promise<FirebaseUser | { error: any }>;
+type SignOut = () => Promise<void>;
 type HandleAuthStateChanged = (user: FirebaseUser) => void;
-type UseAuthProvider = () => { user: UserInfo; signUp: SignUP; signIn: SignIn };
+type UseAuthProvider = () => { user: UserInfo; signUp: SignUP; signIn: SignIn; signOut: SignOut };
 
 // Provider hook that creates an auth object and handles it's state
 const useAuthProvider: UseAuthProvider = () => {
@@ -72,6 +73,10 @@ const useAuthProvider: UseAuthProvider = () => {
     [getUserAdditionalData, user],
   );
 
+  const signOut: SignOut = useCallback(() => {
+    return auth.signOut().then(() => setUser(null));
+  }, []);
+
   const handleAuthStateChanged: HandleAuthStateChanged = useCallback(
     (user: FirebaseUser) => {
       setUser(user);
@@ -102,13 +107,14 @@ const useAuthProvider: UseAuthProvider = () => {
     user,
     signUp,
     signIn,
+    signOut,
   };
 };
 
-type AuthContext = { user: UserInfo | null; signUp: SignUP | null; signIn: SignIn | null };
+type AuthContext = { user: UserInfo | null; signUp: SignUP | null; signIn: SignIn | null; signOut: SignOut | null };
 type UseAuth = () => AuthContext;
 
-const authContext = createContext<AuthContext>({ user: null, signUp: null, signIn: null });
+const authContext = createContext<AuthContext>({ user: null, signUp: null, signIn: null, signOut: null });
 const { Provider } = authContext;
 
 export const AuthProvider: FC = ({ children }) => {

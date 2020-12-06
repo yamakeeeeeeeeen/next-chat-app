@@ -23,6 +23,10 @@ type UseAuthProvider = () => {
 const useAuthProvider: UseAuthProvider = () => {
   const [user, setUser] = useState(null);
 
+  /**
+   * Register a user to Cloud Firestore
+   * @param user
+   */
   const createUser: (user: UserInfo) => Promise<void> = useCallback((user) => {
     return db
       .collection('users')
@@ -36,6 +40,12 @@ const useAuthProvider: UseAuthProvider = () => {
       });
   }, []);
 
+  /**
+   * Sign up
+   * @param name
+   * @param email
+   * @param password
+   */
   const signUp: SignUP = useCallback(
     ({ name, email, password }) => {
       return auth
@@ -50,6 +60,10 @@ const useAuthProvider: UseAuthProvider = () => {
     [createUser],
   );
 
+  /**
+   * Saving Cloud Firestore user data to local state
+   * @param user
+   */
   const getUserAdditionalData: GetUserAdditionalData = useCallback((user: FirebaseUser) => {
     return db
       .collection('users')
@@ -62,6 +76,11 @@ const useAuthProvider: UseAuthProvider = () => {
       });
   }, []);
 
+  /**
+   * Sign in
+   * @param email
+   * @param password
+   */
   const signIn: SignIn = useCallback(
     ({ email, password }) => {
       return auth
@@ -80,10 +99,17 @@ const useAuthProvider: UseAuthProvider = () => {
     [getUserAdditionalData, user],
   );
 
+  /**
+   * Sign out
+   */
   const signOut: SignOut = useCallback(() => {
     return auth.signOut().then(() => setUser(null));
   }, []);
 
+  /**
+   * Handling if the credentials have changed
+   * @param user
+   */
   const handleAuthStateChanged: HandleAuthStateChanged = useCallback(
     (user: FirebaseUser) => {
       setUser(user);
@@ -94,6 +120,10 @@ const useAuthProvider: UseAuthProvider = () => {
     [getUserAdditionalData],
   );
 
+  /**
+   * Send an email for password resetting
+   * @param email
+   */
   const sendPasswordResetEmail: SendPasswordResetEmail = useCallback((email) => {
     return auth.sendPasswordResetEmail(email).then((response) => {
       return response;

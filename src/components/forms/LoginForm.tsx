@@ -23,7 +23,7 @@ export const LoginForm: FC = () => {
     return auth.signIn(data).then((response) => {
       setIsLoading(false);
       if (implementsFirebaseUser(response)) {
-        router.push('/dashboard').then();
+        router.push('/').then();
       } else {
         setError(response.error);
       }
@@ -70,7 +70,7 @@ export const LoginForm: FC = () => {
       </div>
       <div>
         <span>
-          <button type="submit">Log in</button>
+          <button type="submit">Login</button>
         </span>
       </div>
       {error?.message && (

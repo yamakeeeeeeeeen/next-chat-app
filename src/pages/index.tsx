@@ -1,10 +1,13 @@
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useChannel, useEvent, useTrigger } from '@harelpls/use-pusher';
+import { useRequireAuth } from '~/hooks/useRequireAuth';
 
 type Inputs = { message: string };
 
 const Home = () => {
+  const { user, signOut } = useRequireAuth();
+
   const [messages, setMessages] = useState<string[]>([]);
   const { register, handleSubmit, formState } = useForm<Inputs>();
   const { isDirty } = formState;
@@ -23,6 +26,7 @@ const Home = () => {
     [trigger],
   );
 
+  if (!user) return null;
   return (
     <main>
       <h1>pusher chat</h1>
@@ -38,6 +42,12 @@ const Home = () => {
           <li key={index}>{item}</li>
         ))}
       </ul>
+
+      <div>
+        <h3>{`Login user: ${user.name}!`}</h3>
+        <p>{`You are logged in with ${user.email}`}</p>
+        <button onClick={() => signOut()}>Sign out</button>
+      </div>
     </main>
   );
 };

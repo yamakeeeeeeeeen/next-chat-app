@@ -72,6 +72,7 @@ const useAuthProvider: UseAuthProvider = () => {
       .then((userData) => {
         if (userData.data()) {
           setUser(userData.data());
+          localStorage.setItem('user', userData.data().uid);
         }
       });
   }, []);
@@ -101,6 +102,7 @@ const useAuthProvider: UseAuthProvider = () => {
    * Sign out
    */
   const signOut: SignOut = useCallback(() => {
+    localStorage.removeItem('user');
     return auth.signOut().then(() => setUser(null));
   }, []);
 

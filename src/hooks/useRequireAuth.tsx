@@ -9,7 +9,8 @@ export const useRequireAuth: UseRequireAuth = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (auth.user === null) {
+    const loginStatus = localStorage.getItem('user');
+    if (!loginStatus) {
       router.push('/login').then();
     }
   }, [auth, router]);

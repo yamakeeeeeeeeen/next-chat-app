@@ -13,7 +13,7 @@ export const useRequireAuth: UseRequireAuth = () => {
     if (!loginStatus) {
       router.push('/login').then();
     }
-  }, [auth, router]);
+  }, [router]);
 
   return auth;
 };

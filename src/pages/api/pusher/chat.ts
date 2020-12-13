@@ -25,11 +25,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json('sent event successfully');
         res.end(JSON.stringify(response));
-        resolve();
       })
       .catch((error) => {
         console.error(error);
-        reject();
       });
   });
 };

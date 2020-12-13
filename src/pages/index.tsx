@@ -12,8 +12,8 @@ const Home = () => {
   const { register, handleSubmit, formState } = useForm<Inputs>();
   const { isDirty } = formState;
 
-  const channel = useChannel('main-channel');
-  const trigger = useTrigger('main-channel');
+  const channel = useChannel('presence-main-channel');
+  const trigger = useTrigger('presence-main-channel');
 
   useEvent<{ data: string }>(channel, 'send-message', ({ data }) => {
     setMessages((value) => [...value, data]);

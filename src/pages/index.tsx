@@ -21,7 +21,7 @@ const Home = () => {
 
   const pushMessage = useCallback(
     (inputs: Inputs) => {
-      trigger('send-message', inputs.message).catch();
+      trigger('send-message', inputs.message);
     },
     [trigger],
   );

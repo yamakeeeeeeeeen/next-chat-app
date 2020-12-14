@@ -12,8 +12,8 @@ export const ResetPasswordForm: FC = () => {
 
   const onSubmit = useCallback(
     (data: Inputs) => {
-      sendPasswordResetEmail(data.email).then();
-      router.push('/login').then();
+      sendPasswordResetEmail(data.email);
+      router.push('/login');
     },
     [router, sendPasswordResetEmail],
   );

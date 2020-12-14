@@ -23,7 +23,7 @@ export const LoginForm: FC = () => {
     return auth.signIn(data).then((response) => {
       setIsLoading(false);
       if (implementsFirebaseUser(response)) {
-        router.push('/').then();
+        router.push('/');
       } else {
         setError(response.error);
       }

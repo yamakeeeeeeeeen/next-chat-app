@@ -9,7 +9,7 @@ const Login: FC = () => {
   useEffect(() => {
     const loginStatus = localStorage.getItem('user');
     if (loginStatus) {
-      router.push('/').then();
+      router.push('/');
     }
   }, [router]);
 

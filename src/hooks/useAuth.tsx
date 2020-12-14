@@ -88,7 +88,7 @@ const useAuthProvider: UseAuthProvider = () => {
         .signInWithEmailAndPassword(email, password)
         .then((response) => {
           setUser(response.user);
-          getUserAdditionalData(user).then();
+          getUserAdditionalData(user);
           return response.user;
         })
         .catch((error) => {
@@ -114,7 +114,7 @@ const useAuthProvider: UseAuthProvider = () => {
     (user: FirebaseUser) => {
       setUser(user);
       if (user) {
-        getUserAdditionalData(user).then();
+        getUserAdditionalData(user);
       }
     },
     [getUserAdditionalData],

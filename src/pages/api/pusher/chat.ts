@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   await new Promise<void>((resolve, reject) => {
     pusher
-      .trigger('presence-main-channel', 'send-message', data)
+      .trigger('main-channel', 'send-message', data)
       .then((response) => {
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json('sent event successfully');
